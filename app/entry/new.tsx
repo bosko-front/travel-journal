@@ -38,7 +38,7 @@ export default function NewEntryScreen() {
 
     const onSave = async () => {
         if (!title.trim()) {
-            Alert.alert('Greška', 'Naslov je obavezan.');
+            Alert.alert('Error', 'Title is required. Please enter a title.');
             return;
         }
         setLoading(true);
@@ -54,9 +54,9 @@ export default function NewEntryScreen() {
                 country_code: addr?.country_code ?? null,
             };
             await addEntry(payload as any, photos);
-            Alert.alert('Sačuvano', 'Zapis je dodat.', [{text: 'OK', onPress: () => router.back()}]);
+            Alert.alert('Saved', 'Entry added successfully.', [{text: 'OK', onPress: () => router.back()}]);
         } catch (e: any) {
-            Alert.alert('Greška', e?.message ?? 'Neuspelo čuvanje');
+            Alert.alert('Error', e?.message ?? 'Saving failed. Please try again.', []);
         } finally {
             setLoading(false);
         }
@@ -87,7 +87,7 @@ export default function NewEntryScreen() {
                         <Ionicons name="chevron-back" size={moderateScale(24)} color="#fff"/>
                     </TouchableOpacity>
                     <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
-                        <Text numberOfLines={1} style={s.headerTitle}>Novi zapis</Text>
+                        <Text numberOfLines={1} style={s.headerTitle}>New entry</Text>
                     </View>
                 </View>
             </LinearGradient>
@@ -96,21 +96,21 @@ export default function NewEntryScreen() {
                         contentContainerStyle={{padding: scale(16), paddingTop: verticalScale(48)}}>
 
 
-                <Text style={s.label}>Naslov *</Text>
+                <Text style={s.label}>Title *</Text>
                 <TextInput
                     style={s.input}
                     value={title}
                     onChangeText={setTitle}
-                    placeholder="npr. Beč – Prater"
+                    placeholder="example Vienna – Prater"
                     placeholderTextColor="#9CA3AF"
                 />
 
-                <Text style={s.label}>Datum</Text>
+                <Text style={s.label}>Date</Text>
                 <TouchableOpacity
                     style={s.input}
                     onPress={() => setShowPicker(true)}
                 >
-                    <Text>{dateIso || 'Odaberi datum'}</Text>
+                    <Text>{dateIso || 'Choose date'}</Text>
                 </TouchableOpacity>
 
                 {showPicker && (
@@ -122,22 +122,22 @@ export default function NewEntryScreen() {
                     />
                 )}
 
-                <Text style={s.label}>Beleška</Text>
+                <Text style={s.label}>Notes</Text>
                 <TextInput
                     style={[s.input, {height: verticalScale(100), textAlignVertical: 'top'}]}
                     value={note}
                     onChangeText={setNote}
-                    placeholder="Utisci, preporuke, itd."
+                    placeholder="Note, recommendations, itd."
                     multiline
                 />
 
                 <View style={s.row}>
                     <TouchableOpacity style={[s.btn, {flex: 1}]} onPress={onPickImages}>
-                        <Text style={s.btnText}>+ Iz galerije</Text>
+                        <Text style={s.btnText}>+ Gallery</Text>
                     </TouchableOpacity>
                     <View style={{width: scale(10)}}/>
                     <TouchableOpacity style={[s.btnOutline, {flex: 1}]} onPress={onTakePhoto}>
-                        <Text style={s.btnOutlineText}>📷 Kamera</Text>
+                        <Text style={s.btnOutlineText}>📷 Camera</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -173,7 +173,7 @@ export default function NewEntryScreen() {
                     onPress={onSave}
                     disabled={loading}
                 >
-                    <Text style={s.btnPrimaryText}>{loading ? 'Čuvanje...' : 'Sačuvaj'}</Text>
+                    <Text style={s.btnPrimaryText}>{loading ? 'Saving...' : 'Save'}</Text>
                 </TouchableOpacity>
 
                 <View style={{height: verticalScale(40)}}/>

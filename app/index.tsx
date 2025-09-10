@@ -38,10 +38,10 @@ export default function Home() {
 
 
     const confirmDelete = useCallback(async (id: number) => {
-        Alert.alert('Obriši zapis', 'Da li ste sigurni?', [
-            {text: 'Otkaži', style: 'cancel'},
+        Alert.alert('Delete entry', 'Are you sure you want to delete this entry?', [
+            {text: 'Cancel', style: 'cancel'},
             {
-                text: 'Obriši',
+                text: 'Delete',
                 style: 'destructive',
                 onPress: async () => {
                     await deleteEntry(id);
@@ -110,7 +110,7 @@ export default function Home() {
                 </View>
                 <TextInput
                     style={styles.search}
-                    placeholder="Pretraga..."
+                    placeholder="Search..."
                     value={q}
                     onChangeText={setQ}
                 />
@@ -122,8 +122,8 @@ export default function Home() {
                     ItemSeparatorComponent={() => <View style={{height: verticalScale(10)}}/>}
                     contentContainerStyle={{paddingTop: verticalScale(8), paddingBottom: verticalScale(80)}}
                     renderItem={renderItem}
-                    ListEmptyComponent={!loading ? <Text style={styles.empty}>Nema zapisa.</Text> : null}
-                    onScrollBeginDrag={closeOpenRow} // zatvori otvorenu pri skrolu
+                    ListEmptyComponent={!loading ? <Text style={styles.empty}>No data.</Text> : null}
+                    onScrollBeginDrag={closeOpenRow}
                 />
                 <Link href="/entry/new" asChild>
                     <TouchableOpacity style={styles.fab}>

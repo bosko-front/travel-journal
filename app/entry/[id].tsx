@@ -41,7 +41,7 @@ export default function EntryDetailScreen() {
             setPhotos(photos as any[]);
             if (!editingNote) setNoteDraft(entry?.note ?? '');
         } catch (e: any) {
-            Alert.alert('Greška', e?.message ?? 'Neuspelo učitavanje');
+            Alert.alert('Error', e?.message ?? 'Saving  failed. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -64,10 +64,10 @@ export default function EntryDetailScreen() {
             await updateEntryNote(Number(id), noteDraft.trim() === '' ? null : noteDraft.trim());
             await load();
 
-            Alert.alert('Sačuvano', 'Beleška je uspešno ažurirana ✅'); // success alert
+            Alert.alert('Saved', 'Notes saved successfully ✅'); // success alert
             setEditingNote(false);
         } catch (e: any) {
-            Alert.alert('Greška', e?.message ?? 'Neuspelo čuvanje');
+            Alert.alert('Error', e?.message ?? 'Saving  failed. Please try again.');
         } finally {
             setSavingNote(false);
         }
@@ -95,10 +95,10 @@ export default function EntryDetailScreen() {
     };
 
     const onDeletePhoto = async (photoId: number) => {
-        Alert.alert('Obriši fotografiju', 'Da li ste sigurni?', [
-            { text: 'Otkaži', style: 'cancel' },
+        Alert.alert('Delete photo', 'Are you sure you want to delete this photo?', [
+            { text: 'Cancel', style: 'cancel' },
             {
-                text: 'Obriši',
+                text: 'Delete',
                 style: 'destructive',
                 onPress: async () => {
                     await deletePhoto(photoId);
@@ -120,7 +120,7 @@ export default function EntryDetailScreen() {
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: '#F3F4F6', alignItems: 'center', justifyContent: 'center' }}>
                 <StatusBar barStyle="light-content" />
-                <Text>Učitavanje…</Text>
+                <Text>Loading…</Text>
             </SafeAreaView>
         );
     }
@@ -129,7 +129,7 @@ export default function EntryDetailScreen() {
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: '#F3F4F6', alignItems: 'center', justifyContent: 'center' }}>
                 <StatusBar barStyle="light-content" />
-                <Text>Ne postoji zapis.</Text>
+                <Text>No entry.</Text>
             </SafeAreaView>
         );
     }
@@ -159,7 +159,7 @@ export default function EntryDetailScreen() {
                 <View style={s.chips}>
                     <View style={s.chip}>
                         <Ionicons name="images-outline" size={moderateScale(16)} color="#065F46" />
-                        <Text style={s.chipText}>{photos.length} fotografije</Text>
+                        <Text style={s.chipText}>{photos.length} photos</Text>
                     </View>
                     <View style={s.chip}>
                         <Ionicons name="location-outline" size={moderateScale(16)} color="#065F46" />
@@ -175,7 +175,7 @@ export default function EntryDetailScreen() {
             <ScrollView style={s.body} contentContainerStyle={{ paddingBottom: verticalScale(32) }} showsVerticalScrollIndicator={false}>
                 {/* Location card */}
                 <View style={s.card}>
-                    <Text style={s.sectionTitle}>Lokacija</Text>
+                    <Text style={s.sectionTitle}>Location</Text>
                     {entry.lat && entry.lng ? (
                         <>
                             <Text style={s.noteText}>
@@ -215,13 +215,13 @@ export default function EntryDetailScreen() {
                             </View>
                         </>
                     ) : (
-                        <Text style={s.placeholder}>Bez lokacije</Text>
+                        <Text style={s.placeholder}>No locations</Text>
                     )}
                 </View>
 
                 <View style={s.card}>
                     <View style={s.cardHeaderRow}>
-                        <Text style={s.sectionTitle}>Beleška</Text>
+                        <Text style={s.sectionTitle}>Notes</Text>
                         {!editingNote ? (
                             <TouchableOpacity onPress={startEditNote} style={s.iconBtn} hitSlop={{ top: verticalScale(8), bottom: verticalScale(8), left: scale(8), right: scale(8) }}>
                                 <Ionicons name="pencil-outline" size={moderateScale(18)} color="#6B7280" />
@@ -242,14 +242,14 @@ export default function EntryDetailScreen() {
                         entry.note ? (
                             <Text style={s.noteText}>{entry.note}</Text>
                         ) : (
-                            <Text style={s.placeholder}>Nema beleške.</Text>
+                            <Text style={s.placeholder}>No notes.</Text>
                         )
                     ) : (
                         <TextInput
                             style={[s.input, { height: verticalScale(120), textAlignVertical: 'top', marginTop: verticalScale(8) }]}
                             value={noteDraft}
                             onChangeText={setNoteDraft}
-                            placeholder="Utisci, preporuke, itd."
+                            placeholder="Notes, recomendations, etc."
                             multiline
                             autoFocus
                             editable={!savingNote}
@@ -261,18 +261,18 @@ export default function EntryDetailScreen() {
                 <View style={s.actionsRow}>
                     <TouchableOpacity style={[s.primaryBtn, { flex: 1 }]} onPress={onAddFromGallery} activeOpacity={0.9}>
                         <Ionicons name="image-outline" size={moderateScale(18)} color="#fff" />
-                        <Text style={s.primaryBtnText}>Dodaj iz galerije</Text>
+                        <Text style={s.primaryBtnText}>Add from gallery</Text>
                     </TouchableOpacity>
                     <View style={{ width: scale(12) }} />
                     <TouchableOpacity style={[s.outlineBtn, { flex: 1 }]} onPress={onAddFromCamera} activeOpacity={0.9}>
                         <Ionicons name="camera-outline" size={moderateScale(18)} color="#10B981" />
-                        <Text style={s.outlineBtnText}>Kamera</Text>
+                        <Text style={s.outlineBtnText}>Camera</Text>
                     </TouchableOpacity>
                 </View>
 
                 {/* Photos strip */}
                 <View style={{ marginTop: verticalScale(16) }}>
-                    <Text style={s.sectionTitle}>Fotografije</Text>
+                    <Text style={s.sectionTitle}>Photos</Text>
                     {photos.length ? (
                         <FlatList
                             data={photos}
@@ -284,7 +284,7 @@ export default function EntryDetailScreen() {
                             ItemSeparatorComponent={() => <View style={{ width: scale(12) }} />}
                         />
                     ) : (
-                        <Text style={s.placeholder}>Nema fotografija.</Text>
+                        <Text style={s.placeholder}>No photos.</Text>
                     )}
                 </View>
             </ScrollView>
