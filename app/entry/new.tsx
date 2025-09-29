@@ -117,6 +117,7 @@ export default function NewEntryScreen() {
                     <DateTimePicker
                         value={date}
                         mode="date"
+                        themeVariant='light'
                         display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                         onChange={handleDateChange}
                     />
