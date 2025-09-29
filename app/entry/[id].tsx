@@ -332,7 +332,7 @@ const s = StyleSheet.create({
     },
 
     sectionTitle: { fontSize: moderateScale(15), fontWeight: '700', color: '#111827', marginBottom: verticalScale(8) },
-    noteText: { color: '#374151', lineHeight: verticalScale(20) },
+    noteText: { color: '#374151', lineHeight: verticalScale(20) , fontSize: moderateScale(14) , marginBottom: verticalScale(8)},
     placeholder: { color: '#6B7280' },
 
     actionsRow: { flexDirection: 'row', marginTop: verticalScale(16) },
@@ -351,7 +351,7 @@ const s = StyleSheet.create({
         shadowOffset: { width: 0, height: 3 },
         elevation: 2,
     },
-    primaryBtnText: { color: '#fff', fontWeight: '800' },
+    primaryBtnText: { color: '#fff', fontWeight: '800', fontSize: moderateScale(14) },
 
     outlineBtn: {
         backgroundColor: '#fff',
@@ -364,7 +364,7 @@ const s = StyleSheet.create({
         flexDirection: 'row',
         gap: scale(8),
     },
-    outlineBtnText: { color: '#10B981', fontWeight: '800', padding:scale(10) },
+    outlineBtnText: { color: '#10B981', fontWeight: '800', padding:scale(10), fontSize: moderateScale(14) },
 
     thumbWrap: {
         width: scale(132),
