@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { Entry } from '@/types';
-import {createEntryTx, deleteEntry, listEntries} from '@/db/ index'
+import { createEntryTx, deleteEntry, listEntries } from '@/db/ index';
 
 type State = {
     entries: Entry[];
@@ -10,9 +10,9 @@ type State = {
 
 type Actions = {
     refresh: (q?: string) => Promise<void>;
-    addEntry: (payload: Omit<Entry,'id'|'created_at'|'updated_at'>, photos: string[]) => Promise<number>;
+    addEntry: (payload: Omit<Entry, 'id' | 'created_at' | 'updated_at'>, photos: string[]) => Promise<number>;
+    deleteEntry: (id: number) => Promise<void>;
     clearError: () => void;
-    deleteEntry: (id:number) => Promise<void>;
 };
 
 export const useEntryStore = create<State & Actions>((set, get) => ({
@@ -23,9 +23,9 @@ export const useEntryStore = create<State & Actions>((set, get) => ({
     refresh: async (q) => {
         set({ loading: true, error: undefined });
         try {
-            const rows = await listEntries(q);
-            set({ entries: rows as Entry[] });
-        } catch (e:any) {
+            const rows = await listEntries(q); // neka listEntries već vraća Entry[]
+            set({ entries: rows });
+        } catch (e: any) {
             set({ error: e.message ?? 'Failed to load' });
         } finally {
             set({ loading: false });
@@ -33,18 +33,30 @@ export const useEntryStore = create<State & Actions>((set, get) => ({
     },
 
     addEntry: async (payload, photos) => {
+        set({ loading: true, error: undefined });
         try {
             const id = await createEntryTx(payload, photos);
             await get().refresh();
             return id;
-        } catch (e:any) {
+        } catch (e: any) {
             set({ error: e.message ?? 'Failed to save' });
             throw e;
+        } finally {
+            set({ loading: false });
         }
     },
+
     deleteEntry: async (id: number) => {
-        await deleteEntry(id);
-        await get().refresh();
+        set({ loading: true, error: undefined });
+        try {
+            await deleteEntry(id);
+            await get().refresh();
+        } catch (e: any) {
+            set({ error: e.message ?? 'Failed to delete' });
+            throw e;
+        } finally {
+            set({ loading: false });
+        }
     },
 
     clearError: () => set({ error: undefined }),

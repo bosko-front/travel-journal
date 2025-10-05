@@ -19,6 +19,10 @@ import { pickImages, takePhoto } from '@/lib/images';
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import { scale, verticalScale, moderateScale } from "@/utils/scaling";
 import { countryFlagEmoji, getCurrentCoords, distanceKm, reverseGeocode } from '@/lib/location';
+import {weatherGradients} from "@/lib/weatherGradients";
+import LottieView from "lottie-react-native";
+import {weatherAnimations} from "@/lib/weatherAnimations";
+import { useWeatherStore } from "@/stores/weatherStore";
 
 export default function EntryDetailScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
@@ -31,6 +35,7 @@ export default function EntryDetailScreen() {
     const [noteDraft, setNoteDraft] = useState('');
     const [savingNote, setSavingNote] = useState(false)
     const inset = useSafeAreaInsets();
+    const weather = useWeatherStore(s => s.weather);
 
     const load = useCallback(async () => {
         if (!id) return;
@@ -46,6 +51,12 @@ export default function EntryDetailScreen() {
             setLoading(false);
         }
     }, [id]);
+
+    const gradientColors =
+        weather?.icon && weatherGradients[weather.icon]
+            ? weatherGradients[weather.icon]
+            : weatherGradients.default;
+
 
     const startEditNote = () => {
         setNoteDraft(entry?.note ?? '');
@@ -144,15 +155,25 @@ export default function EntryDetailScreen() {
         <View style={s.safe}>
             <StatusBar barStyle="light-content" />
             {/* HEADER */}
-            <LinearGradient colors={['#10B981', '#059669']} style={[s.header, { paddingTop: inset.top + verticalScale(8) }]}>
+            <LinearGradient colors={gradientColors as [string, string]} style={[s.header, { paddingTop: inset.top + verticalScale(12) }]}>
                 <View style={s.headerRow}>
                     <TouchableOpacity onPress={() => router.back()} style={s.backBtn} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
                         <Ionicons name="chevron-back" size={moderateScale(24)} color="#fff" />
                     </TouchableOpacity>
-                    <View style={{ flex: 1, paddingRight: 40 }}>
-                        <Text numberOfLines={1} style={s.headerTitle}>{entry.title}</Text>
+                    <View style={{ flex: 1, alignItems: 'center' }}>
+                        <Text numberOfLines={2} style={s.headerTitle}>{entry.title}</Text>
                         <Text style={s.headerSub}>{prettyDate}</Text>
                     </View>
+                    {weather?.icon && (
+                        <View style={s.weatherRight}>
+                            <LottieView
+                                source={weatherAnimations[weather.icon] || weatherAnimations.default}
+                                autoPlay
+                                loop
+                                style={{ width: 60, height: 60 }}
+                            />
+                        </View>
+                    )}
                 </View>
 
                 {/* Chips row */}
@@ -219,6 +240,30 @@ export default function EntryDetailScreen() {
                     )}
                 </View>
 
+                {/* Weather card */}
+                <View style={s.card}>
+                    <Text style={s.sectionTitle}>Weather</Text>
+                    {entry.weather_temp != null ? (
+                        <View style={{flexDirection:'row', alignItems:'center', gap:12}}>
+                            <Image
+                                source={{ uri: `https://openweathermap.org/img/wn/${entry.weather_icon}@2x.png` }}
+                                style={{ width: 48, height: 48 }}
+                            />
+                            <View>
+                                <Text style={{ fontSize: 16, fontWeight: '600', color:'#111827' }}>
+                                    {entry.weather_temp}°C
+                                </Text>
+                                <Text style={{ color:'#374151', textTransform:'capitalize' }}>
+                                    {entry.weather_desc}
+                                </Text>
+                            </View>
+                        </View>
+                    ) : (
+                        <Text style={s.placeholder}>No weather data.</Text>
+                    )}
+                </View>
+
+
                 <View style={s.card}>
                     <View style={s.cardHeaderRow}>
                         <Text style={s.sectionTitle}>Notes</Text>
@@ -259,9 +304,9 @@ export default function EntryDetailScreen() {
 
                 {/* Actions */}
                 <View style={s.actionsRow}>
-                    <TouchableOpacity style={[s.primaryBtn, { flex: 1 }]} onPress={onAddFromGallery} activeOpacity={0.9}>
-                        <Ionicons name="image-outline" size={moderateScale(18)} color="#fff" />
-                        <Text style={s.primaryBtnText}>Add from gallery</Text>
+                    <TouchableOpacity style={[s.outlineBtn, { flex: 1 }]} onPress={onAddFromGallery} activeOpacity={0.9}>
+                        <Ionicons name="image-outline" size={moderateScale(18)} color="#10B981" />
+                        <Text style={s.outlineBtnText}>Add from gallery</Text>
                     </TouchableOpacity>
                     <View style={{ width: scale(12) }} />
                     <TouchableOpacity style={[s.outlineBtn, { flex: 1 }]} onPress={onAddFromCamera} activeOpacity={0.9}>
@@ -303,12 +348,13 @@ const s = StyleSheet.create({
         borderBottomLeftRadius: scale(18),
         borderBottomRightRadius: scale(18),
     },
-    headerRow: { flexDirection: 'row', alignItems: 'center' },
+    headerRow: { flexDirection: 'row', alignItems: 'center', position: 'relative' },
     backBtn: {
         width: scale(36), height: verticalScale(36), borderRadius: scale(18), backgroundColor: 'rgba(255,255,255,0.18)',
         alignItems: 'center', justifyContent: 'center', marginRight: scale(8),
     },
-    headerTitle: { color: '#fff', fontSize: moderateScale(22), fontWeight: '800' },
+    weatherRight: { position: 'absolute', right: 0, top: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' },
+    headerTitle: { color: '#fff', fontSize: moderateScale(22), fontWeight: '800', textAlign: 'center', flexShrink: 1, paddingHorizontal: scale(8) },
     headerSub: { color: '#D1FAE5', marginTop: verticalScale(2), fontSize: moderateScale(13) },
 
     chips: { flexDirection: 'row', gap: scale(8), marginTop: verticalScale(12), flexWrap: 'wrap' },
@@ -364,7 +410,7 @@ const s = StyleSheet.create({
         flexDirection: 'row',
         gap: scale(8),
     },
-    outlineBtnText: { color: '#10B981', fontWeight: '800', padding:scale(10), fontSize: moderateScale(14) },
+    outlineBtnText: { color: '#10B981', fontWeight: '800', padding:scale(6), fontSize: moderateScale(14) },
 
     thumbWrap: {
         width: scale(132),

@@ -9,6 +9,11 @@ import {deleteEntry} from "@/db/ index";
 import {LinearGradient} from "expo-linear-gradient";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import { scale, verticalScale, moderateScale } from "@/utils/scaling";
+import LottieView from "lottie-react-native";
+import { weatherAnimations} from "@/lib/weatherAnimations";
+import {MotiView} from "moti";
+import {weatherGradients} from "@/lib/weatherGradients";
+import { useWeatherStore } from "@/stores/weatherStore";
 
 
 export default function Home() {
@@ -18,6 +23,8 @@ export default function Home() {
     const rowRefs = useRef<Record<number, Swipeable | null>>({});
     const openRowKey = useRef<number | null>(null);
     const inset = useSafeAreaInsets();
+    const weather = useWeatherStore(s => s.weather);
+    const initWeather = useWeatherStore(s => s.initIfNeeded);
 
     const closeOpenRow = useCallback(() => {
         if (openRowKey.current != null) {
@@ -26,6 +33,16 @@ export default function Home() {
             openRowKey.current = null;
         }
     }, []);
+
+    const gradientColors =
+        weather?.icon && weatherGradients[weather.icon]
+            ? weatherGradients[weather.icon]
+            : weatherGradients.default;
+
+    useEffect(() => {
+        // Ensure weather is initialized; already triggered in _layout, but safe to call
+        initWeather();
+    }, [initWeather]);
 
     useFocusEffect(React.useCallback(() => {
         refresh();
@@ -90,27 +107,62 @@ export default function Home() {
                 }}
                 renderRightActions={() => renderRightView(item.id)}
             >
-                <EntryCard
-                    title={item.title}
-                    date={item.date_iso}
-                    onPress={() => handleCardPress(item.id, index)}
-                />
+                <MotiView
+                    from={{ opacity: 0, translateY: 20 }}
+                    animate={{ opacity: 1, translateY: 0 }}
+                    transition={{ delay: index * 100, type: 'timing', duration: 300 }}
+                >
+                    <EntryCard
+                        title={item.title}
+                        date={item.date_iso}
+                        onPress={() => handleCardPress(item.id, index)}
+                    />
+                </MotiView>
             </Swipeable>
         );
     }, [router, renderRightView, closeOpenRow]);
 
+
+    const ListEmptyComponentView = () => {
+        if (loading) return null;
+
+        return (
+            <View style={{ alignItems: 'center', marginTop: 40 }}>
+                <LottieView
+                    source={require('@/assets/animations/fallback/empty.json')}
+                    autoPlay
+                    loop
+                    style={{ width: 180, height: 180 }}
+                />
+                <Text style={styles.empty}>No trips yet — add your first entry!</Text>
+            </View>
+        );
+    };
+
     return (
 
         <View style={{flex: 1}}>
-            <LinearGradient colors={['#10B981', '#059669']} style={[styles.header, {paddingTop: inset.top + verticalScale(8)}]}>
+            <LinearGradient   colors={gradientColors as [string, string]}
+                              style={[styles.header, {paddingTop: inset.top + verticalScale(12)}]}>
                 <View style={styles.headerRow}>
-                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
                         <Text numberOfLines={1} style={styles.headerTitle}>Travel Journal</Text>
                     </View>
+                    {weather?.icon && (
+                        <View style={styles.weatherRight}>
+                            <LottieView
+                                source={weatherAnimations[weather.icon] || weatherAnimations.default}
+                                autoPlay
+                                loop
+                                style={{ width: scale(60), height: scale(60) }}
+                            />
+                        </View>
+                    )}
                 </View>
                 <TextInput
                     style={styles.search}
                     placeholder="Search..."
+                    placeholderTextColor="#9CA3AF"
                     value={q}
                     onChangeText={setQ}
                 />
@@ -122,7 +174,7 @@ export default function Home() {
                     ItemSeparatorComponent={() => <View style={{height: verticalScale(10)}}/>}
                     contentContainerStyle={{paddingTop: verticalScale(8), paddingBottom: verticalScale(80)}}
                     renderItem={renderItem}
-                    ListEmptyComponent={!loading ? <Text style={styles.empty}>No data.</Text> : null}
+                    ListEmptyComponent={<ListEmptyComponentView />}
                     onScrollBeginDrag={closeOpenRow}
                 />
                 <Link href="/entry/new" asChild>
@@ -146,6 +198,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff', borderRadius: scale(10), paddingHorizontal: scale(12), paddingVertical: verticalScale(14),
         marginTop:verticalScale(12),
         borderWidth: 1, borderColor: '#E5E7EB',
+        color: '#111827',
     },
     empty: {textAlign: 'center', color: '#6B7280', marginTop: verticalScale(40)},
     fab: {
@@ -162,7 +215,8 @@ const styles = StyleSheet.create({
         marginVertical: verticalScale(4),
         marginLeft: scale(8),
     },
-    headerRow: {flexDirection: 'row', alignItems: 'center'},
+    headerRow: {flexDirection: 'row', alignItems: 'center', position: 'relative'},
+    weatherRight: { position: 'absolute', right: 0, top: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' },
     headerTitle: {color: '#fff', fontSize: moderateScale(22), fontWeight: '800'},
     header: {
         paddingHorizontal: scale(16),

@@ -20,6 +20,9 @@ export async function initDb() {
       place_name TEXT,
       locality TEXT,
       country_code TEXT,
+      weather_temp REAL,
+      weather_desc TEXT,
+      weather_icon TEXT,
       created_at TEXT NOT NULL,
       updated_at TEXT NOT NULL
     );
@@ -39,6 +42,9 @@ export async function initDb() {
     await db.execAsync(`ALTER TABLE entries ADD COLUMN place_name TEXT;`).catch(() => {});
     await db.execAsync(`ALTER TABLE entries ADD COLUMN locality TEXT;`).catch(() => {});
     await db.execAsync(`ALTER TABLE entries ADD COLUMN country_code TEXT;`).catch(() => {});
+    await db.execAsync(`ALTER TABLE entries ADD COLUMN weather_temp REAL;`).catch(() => {});
+    await db.execAsync(`ALTER TABLE entries ADD COLUMN weather_desc TEXT;`).catch(() => {});
+    await db.execAsync(`ALTER TABLE entries ADD COLUMN weather_icon TEXT;`).catch(() => {});
 }
 
 export const listEntries = async (q?: string) => {
@@ -51,10 +57,11 @@ export const listEntries = async (q?: string) => {
                     title     LIKE ? OR
                     note      LIKE ? OR
                     place_name LIKE ? OR
-                    locality   LIKE ?
+                    locality   LIKE ? OR
+                    weather_desc LIKE ?
                 ORDER BY date_iso DESC, created_at DESC
             `,
-            [like, like, like, like]
+            [like, like, like, like, like]
         );
     }
     return db.getAllAsync(
@@ -72,6 +79,11 @@ export const createEntryTx = async (
         place_name?: string | null;
         locality?: string | null;
         country_code?: string | null;
+        weather?: {
+            temp: number;
+            desc: string;
+            icon: string;
+        } | null;
     },
     photoUris: string[]
 ) => {
@@ -80,9 +92,10 @@ export const createEntryTx = async (
     const res = await db.runAsync(
         `
             INSERT INTO entries
-            (title, note, date_iso, lat, lng, place_name, locality, country_code, created_at, updated_at)
+            (title, note, date_iso, lat, lng, place_name, locality, country_code,
+             weather_temp, weather_desc, weather_icon, created_at, updated_at)
             VALUES
-                (?,?,?,?,?,?,?,?,?,?)
+                (?,?,?,?,?,?,?,?,?,?,?,?,?)
         `,
         [
             payload.title.trim(),
@@ -93,6 +106,9 @@ export const createEntryTx = async (
             payload.place_name ?? null,
             payload.locality ?? null,
             payload.country_code ?? null,
+            payload.weather?.temp ?? null,
+            payload.weather?.desc ?? null,
+            payload.weather?.icon ?? null,
             now,
             now,
         ]
@@ -160,20 +176,26 @@ type EntryPatch = {
     place_name?: string | null;
     locality?: string | null;
     country_code?: string | null;
+    weather_temp?: number | null;
+    weather_desc?: string | null;
+    weather_icon?: string | null;
 };
 
 export const updateEntry = async (id: number, patch: EntryPatch) => {
     const sets: string[] = [];
     const params: (string | number | null)[] = [];
 
-    if ('title' in patch)       { sets.push('title = ?');       params.push(patch.title ?? null); }
-    if ('note' in patch)        { sets.push('note = ?');        params.push(patch.note ?? null); }
-    if ('date_iso' in patch)    { sets.push('date_iso = ?');    params.push(patch.date_iso ?? null); }
-    if ('lat' in patch)         { sets.push('lat = ?');         params.push(patch.lat ?? null); }
-    if ('lng' in patch)         { sets.push('lng = ?');         params.push(patch.lng ?? null); }
-    if ('place_name' in patch)  { sets.push('place_name = ?');  params.push(patch.place_name ?? null); }
-    if ('locality' in patch)    { sets.push('locality = ?');    params.push(patch.locality ?? null); }
-    if ('country_code' in patch){ sets.push('country_code = ?');params.push(patch.country_code ?? null); }
+    if ('title' in patch)        { sets.push('title = ?');        params.push(patch.title ?? null); }
+    if ('note' in patch)         { sets.push('note = ?');         params.push(patch.note ?? null); }
+    if ('date_iso' in patch)     { sets.push('date_iso = ?');     params.push(patch.date_iso ?? null); }
+    if ('lat' in patch)          { sets.push('lat = ?');          params.push(patch.lat ?? null); }
+    if ('lng' in patch)          { sets.push('lng = ?');          params.push(patch.lng ?? null); }
+    if ('place_name' in patch)   { sets.push('place_name = ?');   params.push(patch.place_name ?? null); }
+    if ('locality' in patch)     { sets.push('locality = ?');     params.push(patch.locality ?? null); }
+    if ('country_code' in patch) { sets.push('country_code = ?'); params.push(patch.country_code ?? null); }
+    if ('weather_temp' in patch) { sets.push('weather_temp = ?'); params.push(patch.weather_temp ?? null); }
+    if ('weather_desc' in patch) { sets.push('weather_desc = ?'); params.push(patch.weather_desc ?? null); }
+    if ('weather_icon' in patch) { sets.push('weather_icon = ?'); params.push(patch.weather_icon ?? null); }
 
     // always bump updated_at
     sets.push('updated_at = ?');

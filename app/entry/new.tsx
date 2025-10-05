@@ -9,6 +9,10 @@ import {useSafeAreaInsets} from "react-native-safe-area-context";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { scale, verticalScale, moderateScale } from "@/utils/scaling";
 import { getCurrentCoords, reverseGeocode, countryFlagEmoji } from '@/lib/location';
+import {weatherGradients} from "@/lib/weatherGradients";
+import LottieView from "lottie-react-native";
+import {weatherAnimations} from "@/lib/weatherAnimations";
+import { useWeatherStore } from "@/stores/weatherStore";
 
 export default function NewEntryScreen() {
     const router = useRouter();
@@ -24,16 +28,24 @@ export default function NewEntryScreen() {
     const [showPicker, setShowPicker] = useState(false);
     const [coords, setCoords] = useState<{lat:number,lng:number}|null>(null);
     const [addr, setAddr] = useState<{place_name:string; locality:string; country_code:string} | null>(null);
+    const [weather, setWeather] = useState<{temp:number, desc:string, icon:string} | null>(null);
+    const globalWeather = useWeatherStore(s => s.weather);
 
     const onPickImages = async () => {
         const uris = await pickImages(10);
         if (uris.length) setPhotos(p => [...uris, ...p]);
     };
 
+    const gradientColors =
+        globalWeather?.icon && weatherGradients[globalWeather.icon]
+            ? weatherGradients[globalWeather.icon]
+            : weatherGradients.default;
+
     const onTakePhoto = async () => {
         const uri = await takePhoto();
         if (uri) setPhotos(p => [uri, ...p]);
     };
+
 
 
     const onSave = async () => {
@@ -52,6 +64,11 @@ export default function NewEntryScreen() {
                 place_name: addr?.place_name ?? null,
                 locality: addr?.locality ?? null,
                 country_code: addr?.country_code ?? null,
+                weather: weather ? {
+                    temp: weather.temp,
+                    desc: weather.desc,
+                    icon: weather.icon,
+                } : null,
             };
             await addEntry(payload as any, photos);
             Alert.alert('Saved', 'Entry added successfully.', [{text: 'OK', onPress: () => router.back()}]);
@@ -76,11 +93,16 @@ export default function NewEntryScreen() {
         setCoords(c);
         const pretty = await reverseGeocode(c.lat, c.lng);
         setAddr(pretty);
+
+        // Delegate weather fetching to the global store to avoid duplicate requests and respect TTL/cache
+        const { setFromCoords } = useWeatherStore.getState();
+        await setFromCoords(c.lat, c.lng);
+        setWeather(useWeatherStore.getState().weather);
     };
 
     return (
         <View style={{flex: 1}}>
-            <LinearGradient colors={['#10B981', '#059669']} style={[s.header, {paddingTop: inset.top + verticalScale(8)}]}>
+            <LinearGradient colors={gradientColors as [string, string]} style={[s.header, {paddingTop: inset.top + verticalScale(12)}]}>
                 <View style={s.headerRow}>
                     <TouchableOpacity onPress={() => router.back()} style={s.backBtn}
                                       hitSlop={{top: verticalScale(8), bottom: verticalScale(8), left: scale(8), right: scale(8)}}>
@@ -89,6 +111,16 @@ export default function NewEntryScreen() {
                     <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
                         <Text numberOfLines={1} style={s.headerTitle}>New entry</Text>
                     </View>
+                    {globalWeather?.icon && (
+                        <View style={s.weatherRight}>
+                            <LottieView
+                                source={weatherAnimations[globalWeather.icon] || weatherAnimations.default}
+                                autoPlay
+                                loop
+                                style={{ width: 60, height: 60 }}
+                            />
+                        </View>
+                    )}
                 </View>
             </LinearGradient>
 
@@ -133,8 +165,8 @@ export default function NewEntryScreen() {
                 />
 
                 <View style={s.row}>
-                    <TouchableOpacity style={[s.btn, {flex: 1}]} onPress={onPickImages}>
-                        <Text style={s.btnText}>+ Gallery</Text>
+                    <TouchableOpacity style={[s.btnOutline, {flex: 1}]} onPress={onPickImages}>
+                        <Text style={s.btnOutlineText}>+ Gallery</Text>
                     </TouchableOpacity>
                     <View style={{width: scale(10)}}/>
                     <TouchableOpacity style={[s.btnOutline, {flex: 1}]} onPress={onTakePhoto}>
@@ -165,17 +197,40 @@ export default function NewEntryScreen() {
                                 ? `${coords.lat.toFixed(4)}, ${coords.lng.toFixed(4)}`
                                 : 'Use my location'}
                     </Text>
+                    {weather && (
+                        <View style={{marginTop: 12, alignItems: 'center'}}>
+                            <Text style={{fontWeight: '600', color: '#374151'}}>
+                                {weather.temp}°C – {weather.desc}
+                            </Text>
+                            <Image
+                                source={{uri: `https://openweathermap.org/img/wn/${weather.icon}@2x.png`}}
+                                style={{width: 48, height: 48}}
+                            />
+                        </View>
+                    )}
                 </TouchableOpacity>
+
 
                 <View style={{height: verticalScale(16)}}/>
 
                 <TouchableOpacity
-                    style={[s.btnPrimary, loading && {opacity: 0.7}]}
+                    style={[s.btnWrapper, loading && {opacity: 0.7}]}
                     onPress={onSave}
                     disabled={loading}
+                    activeOpacity={0.8}
                 >
-                    <Text style={s.btnPrimaryText}>{loading ? 'Saving...' : 'Save'}</Text>
+                    <LinearGradient
+                        colors={gradientColors} // example: light-to-dark green
+                        start={{x: 0, y: 0}}
+                        end={{x: 1, y: 1}}
+                        style={s.btnPrimary}
+                    >
+                        <Text style={s.btnPrimaryText}>
+                            {loading ? 'Saving...' : 'Save'}
+                        </Text>
+                    </LinearGradient>
                 </TouchableOpacity>
+
 
                 <View style={{height: verticalScale(40)}}/>
             </ScrollView>
@@ -212,13 +267,26 @@ const s = StyleSheet.create({
         borderColor: '#A7F3D0'
     },
     btnGhostText: {color: '#047857', fontWeight: '700'},
-    btnPrimary: {backgroundColor: '#10B981', paddingVertical: verticalScale(14), borderRadius: scale(12), alignItems: 'center'},
-    btnPrimaryText: {color: '#fff', fontWeight: '800'},
-    headerRow: { flexDirection: 'row', alignItems: 'center' },
+    btnWrapper: {
+        borderRadius: scale(12),
+        overflow: 'hidden', // ensures gradient corners are rounded
+    },
+    btnPrimary: {
+        paddingVertical: verticalScale(14),
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    btnPrimaryText: {
+        color: '#fff',
+        fontWeight: '800',
+        fontSize: moderateScale(16),
+    },
+    headerRow: { flexDirection: 'row', alignItems: 'center', position: 'relative' },
     backBtn: {
         width: scale(36), height: verticalScale(36), borderRadius: scale(18), backgroundColor: 'rgba(255,255,255,0.18)',
         alignItems: 'center', justifyContent: 'center', marginRight: scale(8),
     },
+    weatherRight: { position: 'absolute', right: 0, top: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' },
     headerTitle: { color: '#fff', fontSize: moderateScale(22), fontWeight: '800' },
     header: {
         paddingHorizontal: scale(16),
