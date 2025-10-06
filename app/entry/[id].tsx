@@ -23,6 +23,7 @@ import {weatherGradients} from "@/lib/weatherGradients";
 import LottieView from "lottie-react-native";
 import {weatherAnimations} from "@/lib/weatherAnimations";
 import { useWeatherStore } from "@/stores/weatherStore";
+import * as Haptics from 'expo-haptics';
 
 export default function EntryDetailScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
@@ -58,7 +59,8 @@ export default function EntryDetailScreen() {
             : weatherGradients.default;
 
 
-    const startEditNote = () => {
+    const startEditNote = async() => {
+        await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
         setNoteDraft(entry?.note ?? '');
         setEditingNote(true);
     };
@@ -70,6 +72,7 @@ export default function EntryDetailScreen() {
 
 
     const saveNote = async () => {
+        await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
         try {
             setSavingNote(true);
             await updateEntryNote(Number(id), noteDraft.trim() === '' ? null : noteDraft.trim());

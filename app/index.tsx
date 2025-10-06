@@ -14,6 +14,7 @@ import { weatherAnimations} from "@/lib/weatherAnimations";
 import {MotiView} from "moti";
 import {weatherGradients} from "@/lib/weatherGradients";
 import { useWeatherStore } from "@/stores/weatherStore";
+import * as Haptics from 'expo-haptics';
 
 
 export default function Home() {
@@ -178,7 +179,9 @@ export default function Home() {
                     onScrollBeginDrag={closeOpenRow}
                 />
                 <Link href="/entry/new" asChild>
-                    <TouchableOpacity style={styles.fab}>
+                    <TouchableOpacity style={styles.fab} onPress={async () => {
+                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
+                    }} activeOpacity={0.85}>
                         <Text style={{color: '#fff', fontWeight: '800', fontSize: moderateScale(18)}}>＋</Text>
                     </TouchableOpacity>
                 </Link>

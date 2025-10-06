@@ -13,6 +13,8 @@ import {weatherGradients} from "@/lib/weatherGradients";
 import LottieView from "lottie-react-native";
 import {weatherAnimations} from "@/lib/weatherAnimations";
 import { useWeatherStore } from "@/stores/weatherStore";
+import AiAudioTranscribe from "@/components/aiAudioTranscribe";
+import * as Haptics from 'expo-haptics';
 
 export default function NewEntryScreen() {
     const router = useRouter();
@@ -49,6 +51,7 @@ export default function NewEntryScreen() {
 
 
     const onSave = async () => {
+        await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
         if (!title.trim()) {
             Alert.alert('Error', 'Title is required. Please enter a title.');
             return;
@@ -88,6 +91,7 @@ export default function NewEntryScreen() {
     };
 
     const onUseLocation = async () => {
+        await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
         const c = await getCurrentCoords();
         if (!c) return;
         setCoords(c);
@@ -156,13 +160,8 @@ export default function NewEntryScreen() {
                 )}
 
                 <Text style={s.label}>Notes</Text>
-                <TextInput
-                    style={[s.input, {height: verticalScale(100), textAlignVertical: 'top'}]}
-                    value={note}
-                    onChangeText={setNote}
-                    placeholder="Note, recommendations, itd."
-                    multiline
-                />
+
+                <AiAudioTranscribe note={note} onChangeNote={setNote} />
 
                 <View style={s.row}>
                     <TouchableOpacity style={[s.btnOutline, {flex: 1}]} onPress={onPickImages}>
