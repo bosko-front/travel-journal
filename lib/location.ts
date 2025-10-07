@@ -1,5 +1,6 @@
 // lib/location.ts
 import * as Location from 'expo-location';
+import { Alert, Linking } from 'react-native';
 
 export type PrettyAddress = {
     place_name: string;    // e.g., "Studentski trg 16"
@@ -8,8 +9,36 @@ export type PrettyAddress = {
 };
 
 export async function getCurrentCoords() {
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== 'granted') return null;
+    // Check current permission first
+    let perm = await Location.getForegroundPermissionsAsync();
+
+    // If not granted, try requesting again on demand (e.g., when user taps "Use my location")
+    if (!perm.granted) {
+        if (perm.canAskAgain) {
+            const req = await Location.requestForegroundPermissionsAsync();
+            if (req.status !== 'granted') {
+                // User denied again
+                Alert.alert(
+                    'Location permission needed',
+                    'Please allow location access to use your current location.',
+                );
+                return null;
+            }
+            perm = req;
+        } else {
+            // Cannot ask again: guide user to app settings
+            Alert.alert(
+                'Location permission disabled',
+                'Please enable location access in Settings to use your current location.',
+                [
+                    { text: 'Cancel', style: 'cancel' },
+                    { text: 'Open Settings', onPress: () => Linking.openSettings?.() },
+                ]
+            );
+            return null;
+        }
+    }
+
     const loc = await Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.Balanced,
     });

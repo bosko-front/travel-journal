@@ -52,17 +52,19 @@
       <true/>
     </dict>
     <key>NSCameraUsageDescription</key>
-    <string>Allow $(PRODUCT_NAME) to access your camera</string>
+    <string>Travel Journal uses your camera to take photos and attach them to your journal entries.</string>
+    <key>NSFaceIDUsageDescription</key>
+    <string>Allow $(PRODUCT_NAME) to access your Face ID biometric data.</string>
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Allow $(PRODUCT_NAME) to use your location.</string>
+    <string>Travel Journal uses your location to tag where your entries were created and display the place name.</string>
     <key>NSLocationAlwaysUsageDescription</key>
     <string>Allow $(PRODUCT_NAME) to access your location</string>
     <key>NSLocationWhenInUseUsageDescription</key>
-    <string>We use your location to save where your travel entries were created.</string>
+    <string>Allow Travel Journal to access your location to tag entries with the place where they were created and show the city and country.</string>
     <key>NSMicrophoneUsageDescription</key>
-    <string>This app needs the microphone for voice notes and transcription.</string>
+    <string>Travel Journal uses the microphone to record short voice notes or transcriptions for your entries.</string>
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>The app accesses your photos to let you add them to your journal.</string>
+    <string>Travel Journal accesses your photos so you can add them to your travel entries.</string>
     <key>NSUserActivityTypes</key>
     <array>
       <string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>

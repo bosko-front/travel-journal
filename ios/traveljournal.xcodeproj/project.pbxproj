@@ -8,25 +8,25 @@
 
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		17A0639F29E18D6BC1174FEF /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 59C3104E0384EF4B9F8329CD /* PrivacyInfo.xcprivacy */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		5228DD46424C28FFC7420137 /* libPods-traveljournal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67CBCE1E383EDF0F7F92DA1 /* libPods-traveljournal.a */; };
-		7AB52F9DA97186FA40E35863 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928282FB812D04D76EE05347 /* ExpoModulesProvider.swift */; };
+		6611BA60E9F270382848D61B /* libPods-traveljournal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E40C8EF5F6497A22125D63D8 /* libPods-traveljournal.a */; };
+		93DC134B19C30827F4E99D8F /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BAD9A10FB90E60D02E2E1B /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		EBCC6108C5BC12456B2C2D1B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8A7C9C6A757191CFC7B4964F /* PrivacyInfo.xcprivacy */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1033F192051651C2C7C72A17 /* Pods-traveljournal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-traveljournal.debug.xcconfig"; path = "Target Support Files/Pods-traveljournal/Pods-traveljournal.debug.xcconfig"; sourceTree = "<group>"; };
+		02863AD52AE7C5CEBDAC5373 /* Pods-traveljournal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-traveljournal.debug.xcconfig"; path = "Target Support Files/Pods-traveljournal/Pods-traveljournal.debug.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* traveljournal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = traveljournal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = traveljournal/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = traveljournal/Info.plist; sourceTree = "<group>"; };
-		2E63810C2D73A1C85A477B74 /* Pods-traveljournal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-traveljournal.release.xcconfig"; path = "Target Support Files/Pods-traveljournal/Pods-traveljournal.release.xcconfig"; sourceTree = "<group>"; };
-		8A7C9C6A757191CFC7B4964F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = traveljournal/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		928282FB812D04D76EE05347 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-traveljournal/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		16D95EDE00991BEC868146FF /* Pods-traveljournal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-traveljournal.release.xcconfig"; path = "Target Support Files/Pods-traveljournal/Pods-traveljournal.release.xcconfig"; sourceTree = "<group>"; };
+		32BAD9A10FB90E60D02E2E1B /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-traveljournal/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		59C3104E0384EF4B9F8329CD /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = traveljournal/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = traveljournal/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		D67CBCE1E383EDF0F7F92DA1 /* libPods-traveljournal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-traveljournal.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E40C8EF5F6497A22125D63D8 /* libPods-traveljournal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-traveljournal.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = traveljournal/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* traveljournal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "traveljournal-Bridging-Header.h"; path = "traveljournal/traveljournal-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -37,21 +37,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5228DD46424C28FFC7420137 /* libPods-traveljournal.a in Frameworks */,
+				6611BA60E9F270382848D61B /* libPods-traveljournal.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0C21AF065F7F781D52CC03A2 /* ExpoModulesProviders */ = {
-			isa = PBXGroup;
-			children = (
-				A05548794C1EC5512D9E48A6 /* traveljournal */,
-			);
-			name = ExpoModulesProviders;
-			sourceTree = "<group>";
-		};
 		13B07FAE1A68108700A75B9A /* traveljournal */ = {
 			isa = PBXGroup;
 			children = (
@@ -61,7 +53,15 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				8A7C9C6A757191CFC7B4964F /* PrivacyInfo.xcprivacy */,
+				59C3104E0384EF4B9F8329CD /* PrivacyInfo.xcprivacy */,
+			);
+			name = traveljournal;
+			sourceTree = "<group>";
+		};
+		1E5ABEC9CCBC4662697607B5 /* traveljournal */ = {
+			isa = PBXGroup;
+			children = (
+				32BAD9A10FB90E60D02E2E1B /* ExpoModulesProvider.swift */,
 			);
 			name = traveljournal;
 			sourceTree = "<group>";
@@ -70,17 +70,18 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				D67CBCE1E383EDF0F7F92DA1 /* libPods-traveljournal.a */,
+				E40C8EF5F6497A22125D63D8 /* libPods-traveljournal.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		464238C0C30813271BE06A4C /* Pods */ = {
+		6C7504AE141FD390488F4BE9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				1033F192051651C2C7C72A17 /* Pods-traveljournal.debug.xcconfig */,
-				2E63810C2D73A1C85A477B74 /* Pods-traveljournal.release.xcconfig */,
+				02863AD52AE7C5CEBDAC5373 /* Pods-traveljournal.debug.xcconfig */,
+				16D95EDE00991BEC868146FF /* Pods-traveljournal.release.xcconfig */,
 			);
+			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -98,8 +99,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				464238C0C30813271BE06A4C /* Pods */,
-				0C21AF065F7F781D52CC03A2 /* ExpoModulesProviders */,
+				6C7504AE141FD390488F4BE9 /* Pods */,
+				B411FEC6C9A567F41D6D2757 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -114,12 +115,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A05548794C1EC5512D9E48A6 /* traveljournal */ = {
+		B411FEC6C9A567F41D6D2757 /* ExpoModulesProviders */ = {
 			isa = PBXGroup;
 			children = (
-				928282FB812D04D76EE05347 /* ExpoModulesProvider.swift */,
+				1E5ABEC9CCBC4662697607B5 /* traveljournal */,
 			);
-			name = traveljournal;
+			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
@@ -139,13 +140,13 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "traveljournal" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				B2B1D6666205A02C93BD9A33 /* [Expo] Configure project */,
+				0D66BDDC328BF113B600CF72 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				EA5F0CE623DFBFCFE6191B68 /* [CP] Embed Pods Frameworks */,
+				0E5D82F042AED58AF5DE21B2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -195,7 +196,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				EBCC6108C5BC12456B2C2D1B /* PrivacyInfo.xcprivacy in Resources */,
+				17A0639F29E18D6BC1174FEF /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,6 +238,53 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		0D66BDDC328BF113B600CF72 /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-traveljournal/expo-configure-project.sh\"\n";
+		};
+		0E5D82F042AED58AF5DE21B2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-traveljournal/Pods-traveljournal-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/RNAudioAPI/libavcodec.framework/libavcodec",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/RNAudioAPI/libavformat.framework/libavformat",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/RNAudioAPI/libavutil.framework/libavutil",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/RNAudioAPI/libswresample.framework/libswresample",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/react-native-executorch/ExecutorchLib.framework/ExecutorchLib",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libavcodec.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libavformat.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libavutil.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libswresample.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ExecutorchLib.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-traveljournal/Pods-traveljournal-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
@@ -285,53 +333,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-traveljournal/Pods-traveljournal-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B2B1D6666205A02C93BD9A33 /* [Expo] Configure project */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[Expo] Configure project";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-traveljournal/expo-configure-project.sh\"\n";
-		};
-		EA5F0CE623DFBFCFE6191B68 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-traveljournal/Pods-traveljournal-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/RNAudioAPI/libavcodec.framework/libavcodec",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/RNAudioAPI/libavformat.framework/libavformat",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/RNAudioAPI/libavutil.framework/libavutil",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/RNAudioAPI/libswresample.framework/libswresample",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/react-native-executorch/ExecutorchLib.framework/ExecutorchLib",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libavcodec.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libavformat.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libavutil.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libswresample.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ExecutorchLib.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-traveljournal/Pods-traveljournal-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -340,7 +341,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				7AB52F9DA97186FA40E35863 /* ExpoModulesProvider.swift in Sources */,
+				93DC134B19C30827F4E99D8F /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,13 +350,12 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1033F192051651C2C7C72A17 /* Pods-traveljournal.debug.xcconfig */;
+			baseConfigurationReference = 02863AD52AE7C5CEBDAC5373 /* Pods-traveljournal.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = traveljournal/traveljournal.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 86J9LHRPM3;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -386,13 +386,12 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2E63810C2D73A1C85A477B74 /* Pods-traveljournal.release.xcconfig */;
+			baseConfigurationReference = 16D95EDE00991BEC868146FF /* Pods-traveljournal.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = traveljournal/traveljournal.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 86J9LHRPM3;
 				INFOPLIST_FILE = traveljournal/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
